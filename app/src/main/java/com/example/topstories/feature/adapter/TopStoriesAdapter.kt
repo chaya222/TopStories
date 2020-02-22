@@ -51,7 +51,7 @@ class TopStoriesAdapter : RecyclerView.Adapter<TopStoriesAdapter.TopStoriesViewH
         for(i in list){
             topStoriesList.add(ArticleItem().apply {
                 title=i.title
-                section=i.title
+                section=i.section
                 subsection=i.subsection
             })
         }

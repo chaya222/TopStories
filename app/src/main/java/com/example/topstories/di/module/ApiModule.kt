@@ -1,8 +1,8 @@
 package com.example.topstories.di.module
 
 import android.content.Context
-import com.example.simpleweatherapp.api.ApiInterface
 import com.example.topstories.BuildConfig
+import com.example.topstories.api.ApiInterface
 import com.example.topstories.utils.AppRxSchedulers
 import com.example.topstories.utils.Constants.Companion.BASE_URL
 import com.google.gson.Gson

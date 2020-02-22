@@ -1,6 +1,6 @@
 package com.example.topstories.di.module
 
-import com.example.topstories.MainActivity
+import com.example.topstories.feature.TopStoriesListActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -9,6 +9,6 @@ import dagger.android.ContributesAndroidInjector
 abstract class ActivityModule {
 
     @ContributesAndroidInjector
-    internal abstract fun contributMainActivity() : MainActivity
+    internal abstract fun contribuTopStoriesActivity() : TopStoriesListActivity
 
 }

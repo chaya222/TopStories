@@ -2,9 +2,7 @@ package com.example.topstories.di.component
 
 
 import com.example.topstories.TopStoriesApp
-import com.example.topstories.di.module.ApiModule
-import com.example.topstories.di.module.ContextModule
-import com.example.topstories.di.module.ViewModelModule
+import com.example.topstories.di.module.*
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
@@ -17,7 +15,9 @@ import javax.inject.Singleton
     AndroidSupportInjectionModule::class,
     ApiModule::class,
     ContextModule::class,
-    ViewModelModule::class
+    ViewModelModule::class,
+    ActivityModule::class,
+    AppModule::class
     ]
 )
 interface AppComponent  : AndroidInjector<TopStoriesApp>{
