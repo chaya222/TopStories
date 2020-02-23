@@ -18,7 +18,7 @@ data class TopStoriesListViewStates(
                 isLoading = false,
                 isRefreshing = false,
                 articles = emptyList(),
-                filterType = FilterType.All,
+                filterType = FilterType.Science,
                 error = null,
                 initial = true
             )

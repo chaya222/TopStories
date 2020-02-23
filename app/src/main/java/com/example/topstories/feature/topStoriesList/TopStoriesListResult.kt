@@ -8,7 +8,7 @@ sealed class TopStoriesListResult : MviResult {
     sealed class LoadTopStoriesResult : TopStoriesListResult() {
         data class Success(val filterType: FilterType) : LoadTopStoriesResult()
         data class Failure(val error: Throwable) : LoadTopStoriesResult()
-        data class InProgress(val isRefreshing: Boolean) : LoadTopStoriesResult()
+        data class InProgress(val isRefreshing: Boolean,val filterType: FilterType) : LoadTopStoriesResult()
     }
 
     sealed class UpdateTopStoriesListResult : TopStoriesListResult() {

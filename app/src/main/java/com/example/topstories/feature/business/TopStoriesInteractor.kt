@@ -3,6 +3,7 @@ package com.example.topstories.feature.business
 
 import android.util.Log
 import com.example.topstories.feature.repo.TopStoriesRepo
+import com.example.topstories.feature.topStoriesList.FilterType
 import com.example.topstories.feature.topStoriesList.TopStoriesListAction
 import com.example.topstories.feature.topStoriesList.TopStoriesListResult
 import com.example.topstories.feature.topStoriesList.TopStoriesListResult.LoadTopStoriesResult
@@ -36,7 +37,7 @@ class TopStoriesInteractor @Inject constructor(val repo : TopStoriesRepo)  :
     private val loadTopStories =
         ObservableTransformer<TopStoriesListAction.LoadStoriesListAction, TopStoriesListResult> { actions ->
             actions.flatMap { action ->
-                repo.loadTopStoriesNY()
+                repo.loadTopStoriesNY(getTypeFrmFilterType(action.filterType))
                     .andThen(
                         Observable.just(LoadTopStoriesResult.Success(action.filterType))
                     )
@@ -44,10 +45,18 @@ class TopStoriesInteractor @Inject constructor(val repo : TopStoriesRepo)  :
                     .onErrorReturn { LoadTopStoriesResult.Failure(it) }
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .startWith(LoadTopStoriesResult.InProgress(action.isRefreshing))
+                    .startWith(LoadTopStoriesResult.InProgress(action.isRefreshing,action.filterType))
             }
         }
 
+    private fun getTypeFrmFilterType(filterType: FilterType) : String{
+        return when(filterType){
+            FilterType.Business->"business"
+            FilterType.Movies->"movies"
+            FilterType.World->"world"
+            FilterType.Science->"science"
+        }
+    }
 
     private val updateTopStories =
         ObservableTransformer<TopStoriesListAction.UpdateStoriesListAction, TopStoriesListResult> { actions ->

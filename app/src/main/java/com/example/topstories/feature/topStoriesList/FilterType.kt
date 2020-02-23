@@ -1,6 +1,8 @@
 package com.example.topstories.feature.topStoriesList
 
 sealed class FilterType {
-    object All : FilterType()
-    object Favorite : FilterType()
+    object Science : FilterType()
+    object Business : FilterType()
+    object Movies : FilterType()
+    object World : FilterType()
 }
