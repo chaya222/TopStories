@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.topstories.R
+import com.example.topstories.db.entity.ArticleEntity
 import com.example.topstories.feature.data.ArticleItem
 import com.example.topstories.utils.makeInVisible
 import kotlin.collections.ArrayList
@@ -46,7 +47,7 @@ class TopStoriesAdapter : RecyclerView.Adapter<TopStoriesAdapter.TopStoriesViewH
 
     }
 
-    fun updateList(list: List<ArticleItem>) {
+    fun updateList(list: List<ArticleEntity>) {
         topStoriesList.clear()
         for(i in list){
             topStoriesList.add(ArticleItem().apply {
@@ -55,8 +56,7 @@ class TopStoriesAdapter : RecyclerView.Adapter<TopStoriesAdapter.TopStoriesViewH
                 subsection=i.subsection
             })
         }
-
-
+        notifyDataSetChanged()
     }
 
 }

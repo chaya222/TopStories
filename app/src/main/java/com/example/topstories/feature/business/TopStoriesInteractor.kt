@@ -52,7 +52,16 @@ class TopStoriesInteractor @Inject constructor(val repo : TopStoriesRepo)  :
     private val updateTopStories =
         ObservableTransformer<TopStoriesListAction.UpdateStoriesListAction, TopStoriesListResult> { actions ->
             actions.flatMap { action ->
-                Observable.just(TopStoriesListResult.UpdateTopStoriesListResult.Success(action.articles))
+                var updateTopStoriesListResult : TopStoriesListResult.UpdateTopStoriesListResult? = when{
+                    action.articles.isNullOrEmpty()->{
+                        TopStoriesListResult.UpdateTopStoriesListResult.Failure(
+                            Throwable()
+                        )
+
+                    }
+                    else-> TopStoriesListResult.UpdateTopStoriesListResult.Success(action.articles)
+                }
+                Observable.just(updateTopStoriesListResult)
                     .cast(TopStoriesListResult.UpdateTopStoriesListResult::class.java)
                     .onErrorReturn { TopStoriesListResult.UpdateTopStoriesListResult.Failure(it) }
                     .subscribeOn(Schedulers.io())

@@ -24,4 +24,8 @@ data class TopStoriesListViewStates(
             )
         }
     }
+
+    override fun toString(): String {
+        return "isLoadint : ${isLoading} , isRefreshing : $isRefreshing article : ${articles.isNullOrEmpty()}"
+    }
 }

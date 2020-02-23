@@ -15,10 +15,12 @@ class TopStoriesListViewModel @Inject constructor(val topStoriesInteractor: TopS
     BaseViewModel<TopStoriesListIntent, TopStoriesListAction, TopStoriesListResult, TopStoriesListViewStates>() {
     override val reducer: BiFunction<TopStoriesListViewStates, TopStoriesListResult, TopStoriesListViewStates> =
         BiFunction { previosState: TopStoriesListViewStates, result: TopStoriesListResult ->
+            Log.d("stattteR","555555")
             when (result) {
                 is TopStoriesListResult.LoadTopStoriesResult ->
                     when (result) {
-                        is TopStoriesListResult.LoadTopStoriesResult.Success ->
+                        is TopStoriesListResult.LoadTopStoriesResult.Success ->{
+                            Log.d("stattteR","1")
                             previosState.copy(
                                 isLoading = false,
                                 isRefreshing = false,
@@ -26,7 +28,10 @@ class TopStoriesListViewModel @Inject constructor(val topStoriesInteractor: TopS
                                 error = null,
                                 initial = false
                             )
+                        }
+
                         is TopStoriesListResult.LoadTopStoriesResult.Failure -> {
+                            Log.d("stattteR","2")
                             previosState.copy(
                                 isLoading = false,
                                 error = result.error,
@@ -34,6 +39,7 @@ class TopStoriesListViewModel @Inject constructor(val topStoriesInteractor: TopS
                             )
                         }
                         is TopStoriesListResult.LoadTopStoriesResult.InProgress -> {
+                            Log.d("stattteR","3")
                             if (result.isRefreshing) {
                                 previosState.copy(isLoading = false, isRefreshing = true)
                             } else previosState.copy(
@@ -47,12 +53,15 @@ class TopStoriesListViewModel @Inject constructor(val topStoriesInteractor: TopS
                 is TopStoriesListResult.UpdateTopStoriesListResult ->
                     when (result) {
                         is TopStoriesListResult.UpdateTopStoriesListResult.Success -> {
+                            Log.d("stattteR","4")
                             previosState.copy(
                                 initial = false,
-                                articles = applyFilters(result.articles, previosState.filterType)
+                                articles = applyFilters(result.articles, previosState.filterType),
+                                isLoading = false
                             )
                         }
                         is TopStoriesListResult.UpdateTopStoriesListResult.Failure -> {
+                            Log.d("stattteR","5")
                             previosState.copy(
                                 initial = false,
                                 error = result.error)
@@ -62,26 +71,26 @@ class TopStoriesListViewModel @Inject constructor(val topStoriesInteractor: TopS
             }
         }
 
-    override fun actionFromIntent(intent: TopStoriesListIntent): TopStoriesListAction =
-        when (intent) {
-            is TopStoriesListIntent.InitialIntent -> TopStoriesListAction.LoadStoriesListAction(
-                false
-            )
-            is TopStoriesListIntent.SwipeToRefresh -> TopStoriesListAction.LoadStoriesListAction(
-                true
-            )
+    override fun actionFromIntent(intent: TopStoriesListIntent): TopStoriesListAction
+        {
+            Log.d("intentAction",intent.toString())
+           return when (intent) {
+                is TopStoriesListIntent.InitialIntent -> TopStoriesListAction.LoadStoriesListAction(
+                    false
+                )
+                is TopStoriesListIntent.SwipeToRefresh -> TopStoriesListAction.LoadStoriesListAction(
+                    true
+                )
+            }
         }
 
     override val statesLiveData: LiveData<TopStoriesListViewStates> =
         LiveDataReactiveStreams.fromPublisher(
             intentsSubject
-                .doOnNext { intent ->
-                    Log.d("intent","$intent")
-                }
                 .map(this::actionFromIntent)
                 .mergeWith(topStoriesInteractor.repo.getArticlesFrmDB().map { TopStoriesListAction.UpdateStoriesListAction(it) })
                 .doOnNext { action ->
-                    Log.d("action:", "$action")
+                    Log.d("action::-", "${action}")
                 }
                 .compose(topStoriesInteractor.actionProcessor)
                 // Cache each state and pass it to the reducer to create a new state from
@@ -105,7 +114,7 @@ class TopStoriesListViewModel @Inject constructor(val topStoriesInteractor: TopS
     override fun processIntents(intents: Observable<TopStoriesListIntent>) {
         intents
             .doOnNext { intent ->
-                Log.d("intent:", "$intent")
+                Log.d("intent::-", "$intent")
             }
             .subscribe(intentsSubject)
     }
