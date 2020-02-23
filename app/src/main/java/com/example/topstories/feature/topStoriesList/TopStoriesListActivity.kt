@@ -29,8 +29,9 @@ class TopStoriesListActivity : BaseActivity<TopStoriesListViewModel,TopStoriesLi
                 render(state!!)
             })
 
-
-
+            swipeRefresh.setOnRefreshListener {
+                swipeToRefreshIntent.onNext(TopStoriesListIntent.SwipeToRefresh)
+            }
     }
 
     override fun provideLayout(): Int = R.layout.activity_top_stories_list
