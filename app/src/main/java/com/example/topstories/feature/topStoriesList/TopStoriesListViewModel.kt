@@ -1,4 +1,4 @@
-package com.example.topstories.feature
+package com.example.topstories.feature.topStoriesList
 
 import androidx.lifecycle.ViewModel
 import com.example.topstories.feature.repo.TopStoriesRepo

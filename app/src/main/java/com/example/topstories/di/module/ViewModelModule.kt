@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.topstories.di.factory.ViewModelFactory
 import com.example.topstories.di.scope.ViewModelKey
-import com.example.topstories.feature.TopStoriesListViewModel
+import com.example.topstories.feature.topStoriesList.TopStoriesListViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
