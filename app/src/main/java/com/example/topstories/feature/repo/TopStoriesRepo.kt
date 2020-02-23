@@ -22,33 +22,38 @@ class TopStoriesRepo @Inject constructor(
 ) {
 
 
-    fun getTopStoriesNY() {
+    fun loadTopStoriesNY() : Completable =
 
         api.getTopStoriesNY("arts")
-            .subscribeOn(rxSchedulers.io())
-            .subscribe(object : SingleObserver<ArticleResponse> {
-                override fun onSuccess(t: ArticleResponse) {
-                    val articleList: ArrayList<ArticleEntity> = ArrayList()
-                    t.articleList.let {
-                        for (item in it) {
-                            articleList.add(getTopStoriesEntityFromResponse(item))
-                        }
-                            SaveArticleInDB(articleList)
-
-
+            .doOnSuccess { articleResponse ->
+                val articleList: ArrayList<ArticleEntity> = ArrayList()
+                articleResponse.articleList.let {
+                    for (item in it) {
+                        articleList.add(getTopStoriesEntityFromResponse(item))
                     }
+                    SaveArticleInDB(articleList)
+
                 }
+            }.ignoreElement()
 
-                override fun onSubscribe(d: Disposable) {}
+//            .subscribeOn(rxSchedulers.io())
+//            .subscribe(object : SingleObserver<ArticleResponse> {
+//                override fun onSuccess(t: ArticleResponse) {
+//
+//
+//                    }
+//                }
+//
+//                override fun onSubscribe(d: Disposable) {}
+//
+//                override fun onError(e: Throwable) {}
+//
+//            })
 
-                override fun onError(e: Throwable) {}
-
-            })
-
-    }
 
 
-    fun getArticlesFrmDB(section : String = "arts") = topStoriesDao.getAllArticle(section)
+
+    fun getArticlesFrmDB() = topStoriesDao.getAllArticle().toObservable()
 
     fun SaveArticleInDB(list: List<ArticleEntity>) {
         topStoriesDao.insertFetchedArticle(list)

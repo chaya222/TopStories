@@ -9,46 +9,53 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.topstories.R
 import com.example.topstories.base.BaseActivity
 import com.example.topstories.feature.adapter.TopStoriesAdapter
-import com.example.topstories.feature.data.ArticleItem
+import io.reactivex.Observable
+import io.reactivex.subjects.PublishSubject.create
 import kotlinx.android.synthetic.main.activity_top_stories_list.*
 
-class TopStoriesListActivity : BaseActivity<TopStoriesListViewModel>() {
-    override fun provideLayout(): Int = R.layout.layout_rv_top_stories
+class TopStoriesListActivity : BaseActivity<TopStoriesListViewModel,TopStoriesListIntent,TopStoriesListViewStates>() {
 
-    override fun provideViewModelClass(): Class<TopStoriesListViewModel> = TopStoriesListViewModel::class.java
 
     private var storiesAdapter : TopStoriesAdapter = TopStoriesAdapter()
-    @SuppressLint("CheckResult")
+    private val initialIntentPublisher = create<TopStoriesListIntent.InitialIntent>()
+    private val swipeToRefreshIntent = create<TopStoriesListIntent.SwipeToRefresh>()
+
+        @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_top_stories_list)
 
-        getViewModel().getTopStoriesNY()
-
-        LiveDataReactiveStreams.fromPublisher(getViewModel().getAllArticles())
-            .observe(this, Observer {
-                it?.let {
-                    Log.d("cooooo",it.size.toString())
-                }
-
+            getViewModel().statesLiveData.observe(this, Observer { state ->
+                render(state!!)
             })
-
-
-//            .subscribeOn(Schedulers.io())
-//            .subscribeOn(AndroidSchedulers.mainThread())
-//            .subscribe {
-//            it?.let {
-//                Log.d("kdfh",it.size.toString())
-//            }
-//        }
 
     }
 
+    override fun provideLayout(): Int = R.layout.layout_rv_top_stories
 
-    private fun setRecyclerView(it: List<ArticleItem>) {
+    override fun provideViewModelClass(): Class<TopStoriesListViewModel> = TopStoriesListViewModel::class.java
+
+    override fun startStream() {
+        getViewModel().processIntents(intents())
+    }
+
+    override fun initViews() {
+        setRecyclerView()
+    }
+
+    override fun render(state: TopStoriesListViewStates) {
+
+    }
+
+    override fun intents() = Observable.merge(
+        initialIntentPublisher,
+        swipeToRefreshIntent)
+
+
+
+    private fun setRecyclerView() {
         val linearLayoutManager = LinearLayoutManager(this)
         rvStories.layoutManager = linearLayoutManager
         rvStories.adapter = storiesAdapter
-        storiesAdapter.updateList(it)
     }
 }

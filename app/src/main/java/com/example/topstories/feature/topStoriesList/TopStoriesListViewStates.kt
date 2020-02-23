@@ -7,7 +7,7 @@ import com.example.topstories.mvibase.MviViewState
 data class TopStoriesListViewStates(
     val isLoading: Boolean,
     val isRefreshing: Boolean,
-    val topStories: List<ArticleEntity>,
+    val articles: List<ArticleEntity>,
     val filterType: FilterType,
     val error: Throwable?,
     val initial: Boolean
@@ -17,7 +17,7 @@ data class TopStoriesListViewStates(
             return TopStoriesListViewStates(
                 isLoading = false,
                 isRefreshing = false,
-                topStories = emptyList(),
+                articles = emptyList(),
                 filterType = FilterType.All,
                 error = null,
                 initial = true

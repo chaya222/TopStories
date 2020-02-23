@@ -7,6 +7,7 @@ import com.example.topstories.api.ApiInterface
 import com.example.topstories.db.TopStoriesDatabase
 import com.example.topstories.db.TopStoriesDatabase.Companion.databaseName
 import com.example.topstories.db.dao.TopStoriesDao
+import com.example.topstories.feature.business.TopStoriesInteractor
 import com.example.topstories.feature.repo.TopStoriesRepo
 import com.example.topstories.utils.AppRxSchedulers
 import dagger.Module
@@ -32,7 +33,7 @@ class AppModule{
         return db.topStoriesDao()
     }
 
-//    @Singleton
-//    @Provides
-//    fun provideTopStoriesListInstructor(repo : TopStoriesRepo) = TopStoriesInstructor(repo)
+    @Singleton
+    @Provides
+    fun provideTopStoriesListInstructor(repo : TopStoriesRepo) = TopStoriesInteractor(repo)
 }

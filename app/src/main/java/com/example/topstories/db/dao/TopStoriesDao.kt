@@ -15,7 +15,7 @@ interface TopStoriesDao {
         insertArticles(entities)
     }
 
-    @Query("SELECT * FROM articles_table where section = :section")
-    fun getAllArticle(section : String): Flowable<List<ArticleEntity>>
+    @Query("SELECT * FROM articles_table")
+    fun getAllArticle(): Flowable<List<ArticleEntity>>
 
 }

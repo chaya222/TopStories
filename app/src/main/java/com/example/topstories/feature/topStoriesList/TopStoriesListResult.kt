@@ -5,15 +5,15 @@ import com.example.topstories.mvibase.MviResult
 
 
 sealed class TopStoriesListResult : MviResult {
-    sealed class LoadCountriesResult : TopStoriesListResult() {
-        data class Success(val filterType: FilterType) : LoadCountriesResult()
-        data class Failure(val error: Throwable) : LoadCountriesResult()
-        data class InProgress(val isRefreshing: Boolean) : LoadCountriesResult()
+    sealed class LoadTopStoriesResult : TopStoriesListResult() {
+        data class Success(val filterType: FilterType) : LoadTopStoriesResult()
+        data class Failure(val error: Throwable) : LoadTopStoriesResult()
+        data class InProgress(val isRefreshing: Boolean) : LoadTopStoriesResult()
     }
 
-    sealed class UpdateCountryListResult : TopStoriesListResult() {
-        data class Success(val countries: List<ArticleEntity>) : UpdateCountryListResult()
-        data class Failure(val error: Throwable) : UpdateCountryListResult()
+    sealed class UpdateTopStoriesListResult : TopStoriesListResult() {
+        data class Success(val articles : List<ArticleEntity>) : UpdateTopStoriesListResult()
+        data class Failure(val error: Throwable) : UpdateTopStoriesListResult()
     }
 
 }
