@@ -17,7 +17,7 @@ class TopStoriesListViewModel @Inject constructor(val topStoriesInteractor: TopS
 
     override val reducer: BiFunction<TopStoriesListViewStates, TopStoriesListResult, TopStoriesListViewStates> =
         BiFunction { previosState: TopStoriesListViewStates, result: TopStoriesListResult ->
-            Log.d("stattteR", result.toString())
+          //  Log.d("stattteR", result.toString())
             when (result) {
                 is TopStoriesListResult.LoadTopStoriesResult ->
                     when (result) {
@@ -58,7 +58,8 @@ class TopStoriesListViewModel @Inject constructor(val topStoriesInteractor: TopS
                                 articles = applyFilters(result.articles, result.filterType),
                                 isLoading = false,
                                 filterType = result.filterType,
-                                error = Throwable("No internet Connection")
+                                error = Throwable("No internet Connection"),
+                                isOffline = true
 
                             )
                         }

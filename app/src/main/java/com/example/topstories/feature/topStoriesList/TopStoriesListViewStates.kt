@@ -10,7 +10,8 @@ data class TopStoriesListViewStates(
     val articles: List<ArticleEntity>,
     val filterType: FilterType,
     val error: Throwable?,
-    val initial: Boolean
+    val initial: Boolean,
+    val isOffline : Boolean
 ) : MviViewState {
     companion object {
         fun idle(): TopStoriesListViewStates {
@@ -20,7 +21,8 @@ data class TopStoriesListViewStates(
                 articles = emptyList(),
                 filterType = FilterType.Science,
                 error = null,
-                initial = true
+                initial = true,
+                isOffline = false
             )
         }
     }
