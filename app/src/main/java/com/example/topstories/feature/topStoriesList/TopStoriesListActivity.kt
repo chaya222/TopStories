@@ -26,7 +26,8 @@ class TopStoriesListActivity :
     private val initialIntentPublisher = create<TopStoriesListIntent.InitialIntent>()
     private val swipeToRefreshIntent = create<TopStoriesListIntent.SwipeToRefresh>()
     private val loadFilteredStories = create<TopStoriesListIntent.LoadFilteredStories>()
-    private var currentSection : FilterType = FilterType.Science
+    private val updateStoriesList = create<TopStoriesListIntent.UpdateFilteredStories>()
+    private var currentSection: FilterType = FilterType.Science
 
     @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,7 +58,9 @@ class TopStoriesListActivity :
     override fun render(state: TopStoriesListViewStates) {
         showProperState(state)
         if (state.initial) {
+            updateStoriesList.onNext(TopStoriesListIntent.UpdateFilteredStories(FilterType.Science))
             initialIntentPublisher.onNext(TopStoriesListIntent.InitialIntent)
+
         }
     }
 
@@ -80,7 +83,7 @@ class TopStoriesListActivity :
             rvStories.makeVisible()
         } else {
             state.error?.let {
-                Toast.makeText(this,it.message,Toast.LENGTH_LONG).show()
+                Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
             }
             rvStories.makeInVisible()
         }
@@ -91,7 +94,8 @@ class TopStoriesListActivity :
     override fun intents() = Observable.merge(
         initialIntentPublisher,
         swipeToRefreshIntent,
-        loadFilteredStories
+        loadFilteredStories,
+        updateStoriesList
     )
 
 
@@ -104,10 +108,12 @@ class TopStoriesListActivity :
     override fun onClick(v: View?) {
         when (v!!.id) {
             clBtmSectionBusiness.id -> {
-                currentSection=FilterType.Business
-                if (isNetworkConnected())
+                currentSection = FilterType.Business
+                if (isNetworkConnected()) {
                     loadFilteredStories.onNext(TopStoriesListIntent.LoadFilteredStories(FilterType.Business))
-                else
+                    updateStoriesList.onNext(TopStoriesListIntent.UpdateFilteredStories(FilterType.Business))
+
+                } else
                     loadFilteredStories.onNext(
                         TopStoriesListIntent.LoadFilteredStories(
                             filterType = FilterType.Business,
@@ -116,10 +122,12 @@ class TopStoriesListActivity :
                     )
             }
             clBtmSectionMovie.id -> {
-                currentSection=FilterType.Movies
-                if (isNetworkConnected())
+                currentSection = FilterType.Movies
+                if (isNetworkConnected()) {
+
                     loadFilteredStories.onNext(TopStoriesListIntent.LoadFilteredStories(FilterType.Movies))
-                else
+                    updateStoriesList.onNext(TopStoriesListIntent.UpdateFilteredStories(FilterType.Movies))
+                } else
                     loadFilteredStories.onNext(
                         TopStoriesListIntent.LoadFilteredStories(
                             filterType = FilterType.Movies,
@@ -128,10 +136,11 @@ class TopStoriesListActivity :
                     )
             }
             clBtmSectionScience.id -> {
-                currentSection=FilterType.Science
-                if (isNetworkConnected())
+                currentSection = FilterType.Science
+                if (isNetworkConnected()) {
                     loadFilteredStories.onNext(TopStoriesListIntent.LoadFilteredStories(FilterType.Science))
-                else
+                    updateStoriesList.onNext(TopStoriesListIntent.UpdateFilteredStories(FilterType.Science))
+                } else
                     loadFilteredStories.onNext(
                         TopStoriesListIntent.LoadFilteredStories(
                             filterType = FilterType.Science,
@@ -140,10 +149,11 @@ class TopStoriesListActivity :
                     )
             }
             clBtmSectionWorld.id -> {
-                currentSection=FilterType.World
-                if (isNetworkConnected())
+                currentSection = FilterType.World
+                if (isNetworkConnected()) {
                     loadFilteredStories.onNext(TopStoriesListIntent.LoadFilteredStories(FilterType.World))
-                else
+                    updateStoriesList.onNext(TopStoriesListIntent.UpdateFilteredStories(FilterType.World))
+                } else
                     loadFilteredStories.onNext(
                         TopStoriesListIntent.LoadFilteredStories(
                             filterType = FilterType.World,

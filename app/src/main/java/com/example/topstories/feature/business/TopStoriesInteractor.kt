@@ -49,12 +49,12 @@ class TopStoriesInteractor @Inject constructor(val repo: TopStoriesRepo) :
                         .onErrorReturn { LoadTopStoriesResult.Failure(it) }
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .startWith(
-                            LoadTopStoriesResult.InProgress(
-                                action.isRefreshing,
-                                action.filterType
-                            )
-                        )
+//                        .startWith(
+//                            LoadTopStoriesResult.InProgress(
+//                                action.isRefreshing,
+//                                action.filterType
+//                            )
+//                        )
                 } else {
                     repo.getArticlesFrmDB()
                         .map { LoadTopStoriesResult.Offline(it,action.filterType) }
@@ -84,21 +84,30 @@ class TopStoriesInteractor @Inject constructor(val repo: TopStoriesRepo) :
     private val updateTopStories =
         ObservableTransformer<TopStoriesListAction.UpdateStoriesListAction, TopStoriesListResult> { actions ->
             actions.flatMap { action ->
-                var updateTopStoriesListResult: TopStoriesListResult.UpdateTopStoriesListResult? =
-                    when {
-                        action.articles.isNullOrEmpty() -> {
-                            TopStoriesListResult.UpdateTopStoriesListResult.Failure(
-                                Throwable()
-                            )
 
-                        }
-                        else -> TopStoriesListResult.UpdateTopStoriesListResult.Success(action.articles)
-                    }
-                Observable.just(updateTopStoriesListResult)
+                repo.getArticlesFrmDB()
+                    .map { TopStoriesListResult.UpdateTopStoriesListResult.Success(it.filter { it.section==getTypeFrmFilterType(action.filterType) },action.filterType)}
                     .cast(TopStoriesListResult.UpdateTopStoriesListResult::class.java)
-                    .onErrorReturn { TopStoriesListResult.UpdateTopStoriesListResult.Failure(it) }
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
+
+
+
+//                var updateTopStoriesListResult: TopStoriesListResult.UpdateTopStoriesListResult? =
+//                    when {
+//                        action.articles.isNullOrEmpty() -> {
+//                            TopStoriesListResult.UpdateTopStoriesListResult.Failure(
+//                                Throwable()
+//                            )
+//
+//                        }
+//                        else -> TopStoriesListResult.UpdateTopStoriesListResult.Success(action.articles)
+//                    }
+//                Observable.just(updateTopStoriesListResult)
+//                    .cast(TopStoriesListResult.UpdateTopStoriesListResult::class.java)
+//                    .onErrorReturn { TopStoriesListResult.UpdateTopStoriesListResult.Failure(it) }
+//                    .subscribeOn(Schedulers.io())
+//                    .observeOn(AndroidSchedulers.mainThread())
             }
         }
 

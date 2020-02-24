@@ -9,6 +9,7 @@ import com.example.topstories.feature.business.TopStoriesInteractor
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
+import java.lang.Exception
 import javax.inject.Inject
 
 class TopStoriesListViewModel @Inject constructor(val topStoriesInteractor: TopStoriesInteractor) :
@@ -67,10 +68,11 @@ class TopStoriesListViewModel @Inject constructor(val topStoriesInteractor: TopS
                     when (result) {
                         is TopStoriesListResult.UpdateTopStoriesListResult.Success -> {
                             Log.d("stattteR", "4")
+                            val articles = applyFilters(result.articles, result.filterType)
                             previosState.copy(
                                 initial = false,
-                                articles = applyFilters(result.articles, previosState.filterType),
-                                isLoading = false
+                                articles = articles,
+                                isLoading = articles.isEmpty()
                             )
                         }
                         is TopStoriesListResult.UpdateTopStoriesListResult.Failure -> {
@@ -98,6 +100,19 @@ class TopStoriesListViewModel @Inject constructor(val topStoriesInteractor: TopS
                 filterType = intent.filterType,
                 offline = intent.offline
             )
+            is TopStoriesListIntent.UpdateFilteredStories -> {
+                try{
+                    TopStoriesListAction.UpdateStoriesListAction(
+                        filterType = intent.filterType
+                    )
+                }catch(ex : Exception){
+                    Log.d("exceptionnnn",ex.toString())
+                    TopStoriesListAction.UpdateStoriesListAction(
+                        filterType = intent.filterType
+                    )
+                }
+
+            }
         }
     }
 
@@ -105,11 +120,6 @@ class TopStoriesListViewModel @Inject constructor(val topStoriesInteractor: TopS
         LiveDataReactiveStreams.fromPublisher(
             intentsSubject
                 .map(this::actionFromIntent)
-                .mergeWith(topStoriesInteractor.repo.getArticlesFrmDB().map {
-                    TopStoriesListAction.UpdateStoriesListAction(
-                        it
-                    )
-                })
                 .doOnNext { action ->
                     Log.d("action::-", "${action}")
                 }

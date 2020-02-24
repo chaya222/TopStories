@@ -13,7 +13,7 @@ sealed class TopStoriesListResult : MviResult {
     }
 
     sealed class UpdateTopStoriesListResult : TopStoriesListResult() {
-        data class Success(val articles : List<ArticleEntity>) : UpdateTopStoriesListResult()
+        data class Success(val articles : List<ArticleEntity>,val filterType: FilterType) : UpdateTopStoriesListResult()
         data class Failure(val error: Throwable) : UpdateTopStoriesListResult()
     }
 
