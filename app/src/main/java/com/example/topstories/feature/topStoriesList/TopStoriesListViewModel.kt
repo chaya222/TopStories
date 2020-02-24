@@ -13,9 +13,10 @@ import javax.inject.Inject
 
 class TopStoriesListViewModel @Inject constructor(val topStoriesInteractor: TopStoriesInteractor) :
     BaseViewModel<TopStoriesListIntent, TopStoriesListAction, TopStoriesListResult, TopStoriesListViewStates>() {
+
     override val reducer: BiFunction<TopStoriesListViewStates, TopStoriesListResult, TopStoriesListViewStates> =
         BiFunction { previosState: TopStoriesListViewStates, result: TopStoriesListResult ->
-            Log.d("stattteR", "555555")
+            Log.d("stattteR", result.toString())
             when (result) {
                 is TopStoriesListResult.LoadTopStoriesResult ->
                     when (result) {
@@ -49,6 +50,16 @@ class TopStoriesListViewModel @Inject constructor(val topStoriesInteractor: TopS
                                 articles = emptyList()
                             )
                         }
+                        
+                        is TopStoriesListResult.LoadTopStoriesResult.Offline -> {
+                            previosState.copy(
+                                initial = false,
+                                articles = applyFilters(result.articles, result.filterType),
+                                isLoading = false,
+                                filterType = result.filterType
+
+                            )
+                        }
                     }
 
                 is TopStoriesListResult.UpdateTopStoriesListResult ->
@@ -69,6 +80,7 @@ class TopStoriesListViewModel @Inject constructor(val topStoriesInteractor: TopS
                             )
                         }
                     }
+
             }
         }
 
@@ -82,9 +94,9 @@ class TopStoriesListViewModel @Inject constructor(val topStoriesInteractor: TopS
                 true
             )
             is TopStoriesListIntent.LoadFilteredStories -> TopStoriesListAction.LoadStoriesListAction(
-                filterType = intent.filterType
+                filterType = intent.filterType,
+                offline = intent.offline
             )
-            is TopStoriesListIntent.offlineLoadFilteredStories -> TODO()
         }
     }
 
@@ -101,6 +113,9 @@ class TopStoriesListViewModel @Inject constructor(val topStoriesInteractor: TopS
                     Log.d("action::-", "${action}")
                 }
                 .compose(topStoriesInteractor.actionProcessor)
+                .doOnNext { action ->
+                    Log.d("action:tt:-", "${action}")
+                }
                 // Cache each state and pass it to the reducer to create a new state from
                 // the previous cached one and the latest Result emitted from the action processor.
                 // The Scan operator is used here for the caching.

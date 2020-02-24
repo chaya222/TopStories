@@ -24,8 +24,7 @@ class TopStoriesListActivity :
     private val initialIntentPublisher = create<TopStoriesListIntent.InitialIntent>()
     private val swipeToRefreshIntent = create<TopStoriesListIntent.SwipeToRefresh>()
     private val loadFilteredStories = create<TopStoriesListIntent.LoadFilteredStories>()
-    private val offlineLoadFilteredStories =
-        create<TopStoriesListIntent.OfflineLoadFilteredStories>()
+
 
     @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -88,8 +87,7 @@ class TopStoriesListActivity :
     override fun intents() = Observable.merge(
         initialIntentPublisher,
         swipeToRefreshIntent,
-        loadFilteredStories,
-        offlineLoadFilteredStories
+        loadFilteredStories
     )
 
 
@@ -105,9 +103,10 @@ class TopStoriesListActivity :
                 if (isNetworkConnected())
                     loadFilteredStories.onNext(TopStoriesListIntent.LoadFilteredStories(FilterType.Business))
                 else
-                    offlineLoadFilteredStories.onNext(
-                        TopStoriesListIntent.OfflineLoadFilteredStories(
-                            FilterType.Business
+                    loadFilteredStories.onNext(
+                        TopStoriesListIntent.LoadFilteredStories(
+                            filterType = FilterType.Movies,
+                            offline = true
                         )
                     )
             }
@@ -115,9 +114,10 @@ class TopStoriesListActivity :
                 if (isNetworkConnected())
                     loadFilteredStories.onNext(TopStoriesListIntent.LoadFilteredStories(FilterType.Movies))
                 else
-                    offlineLoadFilteredStories.onNext(
-                        TopStoriesListIntent.OfflineLoadFilteredStories(
-                            FilterType.Movies
+                    loadFilteredStories.onNext(
+                        TopStoriesListIntent.LoadFilteredStories(
+                            filterType = FilterType.Movies,
+                            offline = true
                         )
                     )
             }
@@ -125,9 +125,10 @@ class TopStoriesListActivity :
                 if (isNetworkConnected())
                     loadFilteredStories.onNext(TopStoriesListIntent.LoadFilteredStories(FilterType.Science))
                 else
-                    offlineLoadFilteredStories.onNext(
-                        TopStoriesListIntent.OfflineLoadFilteredStories(
-                            FilterType.Science
+                    loadFilteredStories.onNext(
+                        TopStoriesListIntent.LoadFilteredStories(
+                            filterType = FilterType.Movies,
+                            offline = true
                         )
                     )
             }
@@ -135,9 +136,10 @@ class TopStoriesListActivity :
                 if (isNetworkConnected())
                     loadFilteredStories.onNext(TopStoriesListIntent.LoadFilteredStories(FilterType.World))
                 else
-                    offlineLoadFilteredStories.onNext(
-                        TopStoriesListIntent.OfflineLoadFilteredStories(
-                            FilterType.World
+                    loadFilteredStories.onNext(
+                        TopStoriesListIntent.LoadFilteredStories(
+                            filterType = FilterType.Movies,
+                            offline = true
                         )
                     )
             }
