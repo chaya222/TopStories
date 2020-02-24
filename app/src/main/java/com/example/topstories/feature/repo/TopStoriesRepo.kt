@@ -32,6 +32,8 @@ class TopStoriesRepo @Inject constructor(
 
     fun getArticlesFrmDB() = topStoriesDao.getAllArticle().toObservable()
 
+    fun getArticleByTitle(name : String) = topStoriesDao.getArticleByTitle(name)
+
     fun saveArticleInDB(list: List<ArticleEntity>) = topStoriesDao.insertFetchedArticle(list)
 
 
