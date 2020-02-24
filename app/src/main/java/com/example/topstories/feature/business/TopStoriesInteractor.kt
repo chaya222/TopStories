@@ -57,22 +57,22 @@ class TopStoriesInteractor @Inject constructor(val repo: TopStoriesRepo) :
                         )
                 } else {
                     repo.getArticlesFrmDB()
-                        .map { LoadTopStoriesResult.Offline(it,action.filterType    ) }
+                        .map { LoadTopStoriesResult.Offline(it,action.filterType) }
                         .cast(LoadTopStoriesResult::class.java)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .startWith(
-                            LoadTopStoriesResult.InProgress(
-                                action.isRefreshing,
-                                action.filterType
-                            )
-                        )
+//                        .startWith(
+//                            LoadTopStoriesResult.InProgress(
+//                                action.isRefreshing,
+//                                action.filterType
+//                            )
+//                        )
                 }
 
             }
         }
 
-    private fun getTypeFrmFilterType(filterType: FilterType): String {
+    fun getTypeFrmFilterType(filterType: FilterType): String {
         return when (filterType) {
             FilterType.Business -> "business"
             FilterType.Movies -> "movies"

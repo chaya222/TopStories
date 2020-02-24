@@ -18,4 +18,7 @@ interface TopStoriesDao {
     @Query("SELECT * FROM articles_table")
     fun getAllArticle(): Flowable<List<ArticleEntity>>
 
+    @Query("SELECT * FROM articles_table")
+    fun getAllArticleWdoutObserve(): List<ArticleEntity>
+
 }

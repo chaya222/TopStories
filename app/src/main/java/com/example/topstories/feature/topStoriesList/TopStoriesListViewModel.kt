@@ -56,7 +56,8 @@ class TopStoriesListViewModel @Inject constructor(val topStoriesInteractor: TopS
                                 initial = false,
                                 articles = applyFilters(result.articles, result.filterType),
                                 isLoading = false,
-                                filterType = result.filterType
+                                filterType = result.filterType,
+                                error = Throwable("No internet Connection")
 
                             )
                         }
@@ -91,7 +92,7 @@ class TopStoriesListViewModel @Inject constructor(val topStoriesInteractor: TopS
                 false
             )
             is TopStoriesListIntent.SwipeToRefresh -> TopStoriesListAction.LoadStoriesListAction(
-                true
+                true,filterType = intent.filterType
             )
             is TopStoriesListIntent.LoadFilteredStories -> TopStoriesListAction.LoadStoriesListAction(
                 filterType = intent.filterType,
