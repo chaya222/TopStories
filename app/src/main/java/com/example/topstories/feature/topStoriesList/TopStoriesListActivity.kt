@@ -17,6 +17,9 @@ import com.example.topstories.utils.makeVisible
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject.create
 import kotlinx.android.synthetic.main.activity_top_stories_list.*
+import com.google.android.material.snackbar.Snackbar
+
+
 
 class TopStoriesListActivity :
     BaseActivity<TopStoriesListViewModel, TopStoriesListIntent, TopStoriesListViewStates>(),
@@ -100,7 +103,10 @@ class TopStoriesListActivity :
         if (state.isOffline) {
             if (state.articles.isEmpty()) {
                 state.error?.let {
-                    Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+                    Snackbar.make(clParent, "No internet connection", Snackbar.LENGTH_LONG)
+                        .setAction("CLOSE") { }
+                        .setActionTextColor(resources.getColor(android.R.color.holo_red_light))
+                        .show()
                 }
             }
 
