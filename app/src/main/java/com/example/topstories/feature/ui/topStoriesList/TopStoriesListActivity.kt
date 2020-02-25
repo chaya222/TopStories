@@ -1,18 +1,16 @@
-package com.example.topstories.feature.topStoriesList
+package com.example.topstories.feature.ui.topStoriesList
 
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Filter
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.topstories.R
 import com.example.topstories.base.BaseActivity
 import com.example.topstories.feature.adapter.TopStoriesAdapter
 import com.example.topstories.feature.listener.TopStoryListener
-import com.example.topstories.feature.topStoriesDetails.TopStoriesDetailsActivity
+import com.example.topstories.feature.ui.topStoriesDetails.TopStoriesDetailsActivity
 import com.example.topstories.utils.isNetworkConnected
 import com.example.topstories.utils.makeInVisible
 import com.example.topstories.utils.makeVisible

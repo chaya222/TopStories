@@ -1,6 +1,5 @@
-package com.example.topstories.feature.topStoriesList
+package com.example.topstories.feature.ui.topStoriesList
 
-import com.example.topstories.db.entity.ArticleEntity
 import com.example.topstories.mvibase.MviAction
 
 sealed class TopStoriesListAction : MviAction {

@@ -3,10 +3,10 @@ package com.example.topstories.feature.business
 
 import android.util.Log
 import com.example.topstories.feature.repo.TopStoriesRepo
-import com.example.topstories.feature.topStoriesList.FilterType
-import com.example.topstories.feature.topStoriesList.TopStoriesListAction
-import com.example.topstories.feature.topStoriesList.TopStoriesListResult
-import com.example.topstories.feature.topStoriesList.TopStoriesListResult.LoadTopStoriesResult
+import com.example.topstories.feature.ui.topStoriesList.FilterType
+import com.example.topstories.feature.ui.topStoriesList.TopStoriesListAction
+import com.example.topstories.feature.ui.topStoriesList.TopStoriesListResult
+import com.example.topstories.feature.ui.topStoriesList.TopStoriesListResult.LoadTopStoriesResult
 import com.example.topstories.mvibase.MviInteractor
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer

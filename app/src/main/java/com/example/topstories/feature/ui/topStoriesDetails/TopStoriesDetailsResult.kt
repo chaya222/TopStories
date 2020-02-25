@@ -1,4 +1,4 @@
-package com.example.topstories.feature.topStoriesDetails
+package com.example.topstories.feature.ui.topStoriesDetails
 
 import com.example.topstories.db.entity.ArticleEntity
 import com.example.topstories.mvibase.MviResult

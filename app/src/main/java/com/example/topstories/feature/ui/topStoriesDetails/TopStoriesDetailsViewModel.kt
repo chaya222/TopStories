@@ -1,4 +1,4 @@
-package com.example.topstories.feature.topStoriesDetails
+package com.example.topstories.feature.ui.topStoriesDetails
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.LiveDataReactiveStreams

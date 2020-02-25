@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/clParent"
-    tools:context=".feature.topStoriesList.TopStoriesListActivity">
+    tools:context=".feature.ui.topStoriesList.TopStoriesListActivity">
 
     <ProgressBar
         android:id="@+id/progressBar"

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/black"
-    tools:context=".feature.topStoriesDetails.TopStoriesDetailsActivity">
+    tools:context=".feature.ui.topStoriesDetails.TopStoriesDetailsActivity">
 
     <ImageView
         android:id="@+id/imvBackCover"
@@ -50,7 +50,7 @@
         app:layout_constraintTop_toBottomOf="@id/tvTitle"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="20dp"/>
 
     <TextView
         android:id="@+id/tvAuthor"
@@ -75,7 +75,7 @@
         app:layout_constraintTop_toBottomOf="@id/imvAuthor"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="15dp"/>
 
     <TextView
         android:id="@+id/tvPublish"
@@ -100,7 +100,7 @@
         app:layout_constraintTop_toBottomOf="@id/imvPublish"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="15dp"/>
 
     <TextView
         android:id="@+id/tvLink"
@@ -110,6 +110,9 @@
         android:layout_marginStart="10dp"
         android:text="https://nyti.ms/2PiWst8"
         android:textSize="14dp"
+        android:autoLink="web"
+        android:textColorLink="#1735E0"
+        android:linksClickable="true"
         app:layout_constraintTop_toTopOf="@id/imvLink"
         app:layout_constraintBottom_toBottomOf="@id/imvLink"
         android:fontFamily="@font/avenirnext_medium"

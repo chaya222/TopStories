@@ -1,4 +1,4 @@
-package com.example.topstories.feature.topStoriesList
+package com.example.topstories.feature.ui.topStoriesList
 
 import android.util.Log
 import androidx.lifecycle.LiveData

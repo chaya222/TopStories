@@ -2,10 +2,9 @@ package com.example.topstories.feature.business
 
 import android.util.Log
 import com.example.topstories.feature.repo.TopStoriesRepo
-import com.example.topstories.feature.topStoriesDetails.TopStoriesDetailsAction
-import com.example.topstories.feature.topStoriesDetails.TopStoriesDetailsResult
+import com.example.topstories.feature.ui.topStoriesDetails.TopStoriesDetailsAction
+import com.example.topstories.feature.ui.topStoriesDetails.TopStoriesDetailsResult
 import com.example.topstories.mvibase.MviInteractor
-import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

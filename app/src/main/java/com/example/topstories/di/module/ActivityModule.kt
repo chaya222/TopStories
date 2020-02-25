@@ -1,7 +1,7 @@
 package com.example.topstories.di.module
 
-import com.example.topstories.feature.topStoriesDetails.TopStoriesDetailsActivity
-import com.example.topstories.feature.topStoriesList.TopStoriesListActivity
+import com.example.topstories.feature.ui.topStoriesDetails.TopStoriesDetailsActivity
+import com.example.topstories.feature.ui.topStoriesList.TopStoriesListActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
