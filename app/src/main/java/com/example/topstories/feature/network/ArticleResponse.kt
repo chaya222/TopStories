@@ -13,5 +13,21 @@ data class TopStoriesResult(
     @SerializedName("section")
     var section: String = "",
     @SerializedName("subsection")
-    var subsection: String = ""
+    var subsection: String = "",
+    @SerializedName("abstract")
+    var abstract: String = "",
+    @SerializedName("byline")
+    var byline: String = "",
+    @SerializedName("published_date")
+    var published_date: String = "",
+    @SerializedName("short_url")
+    var articleUrl: String = "",
+    @SerializedName("multimedia")
+    var multimediaList : List<Multimedia> = ArrayList()
+
+)
+
+data class Multimedia(
+    @SerializedName("url")
+    var url : String = ""
 )

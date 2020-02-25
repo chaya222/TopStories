@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
 import com.example.topstories.R
 import com.example.topstories.base.BaseActivity
 import io.reactivex.Observable
@@ -13,7 +14,9 @@ import io.reactivex.subjects.PublishSubject.create
 class TopStoriesDetailsActivity :
     BaseActivity<TopStoriesDetailsViewModel, TopStoriesDetailsIntent, TopStoriesDetailsViewStates>()
     {
-    companion object {
+
+
+        companion object {
         fun newInstance(context: Context,  name: String): Intent {
             return Intent(context, TopStoriesDetailsActivity::class.java).apply {
                 putExtra("name", name)
@@ -37,6 +40,8 @@ class TopStoriesDetailsActivity :
         }
 
 
+
+
     }
 
     override fun provideLayout(): Int = R.layout.activity_top_stories_details
@@ -57,6 +62,15 @@ class TopStoriesDetailsActivity :
 
 
     private fun showProperState(state: TopStoriesDetailsViewStates) {
+
+//        state.article?.let {
+//            Glide.with(this)
+//                .load(it.multimediaUrl)
+//                .placeholder(R.drawable.place_holder) //placeholder
+//                .error(R.drawable.place_holder) //error
+//                .into(placeholdeImage);
+
+        }
 
 //        if (state.isLoading) {
 //            progressBar.makeVisible()
@@ -85,12 +99,15 @@ class TopStoriesDetailsActivity :
 //        }
 //
 //        swipeRefresh.isRefreshing = state.isRefreshing
+
+
+        override fun intents(): Observable<TopStoriesDetailsIntent> {
+            return initialIntentPublisher.cast(TopStoriesDetailsIntent::class.java)
+        }
     }
 
-    override fun intents() : Observable<TopStoriesDetailsIntent>{
-        return initialIntentPublisher.cast(TopStoriesDetailsIntent::class.java)
-    }
 
 
-}
+
+
 

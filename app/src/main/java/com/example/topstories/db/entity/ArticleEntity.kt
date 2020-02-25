@@ -7,7 +7,12 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "articles_table")
 data class ArticleEntity(
     @PrimaryKey
-    val title : String = "",
-    val section : String = "",
-    val subsection : String = ""
+    var title : String = "",
+    var section : String = "",
+    var subsection : String = "",
+    var abstract : String = "",
+    var byline : String = "",
+    var published_date : String = "",
+    var articleUrl : String = "",
+    var multimediaUrl : String = ""
 )
