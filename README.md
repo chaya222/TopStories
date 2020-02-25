@@ -1,4 +1,4 @@
-# Top Stories(News) App using MVI (Model-View-Intetn) pattern
+# Top Stories(News) App using MVI (Model-View-Intent) pattern
 A project showcasing MVI(Model-View-Intent), Android Arch. Components,RxJava2, Dagger2, Retrofit, OkHttp3.
 
 ## Preview
