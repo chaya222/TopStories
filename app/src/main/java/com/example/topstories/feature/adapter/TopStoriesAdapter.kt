@@ -40,7 +40,7 @@ class TopStoriesAdapter : RecyclerView.Adapter<TopStoriesAdapter.TopStoriesViewH
         val itemArticle = topStoriesList.get(position)
 
         holder.tvTitle.text = itemArticle.title
-        holder.tvSection.text =  itemArticle.byline
+        holder.tvSection.text =  if(itemArticle.byline.isNotEmpty()) itemArticle.byline else "Unknown"
 
         Glide.with(holder.itemView.context)
             .load(itemArticle.multimediaUrl)
@@ -77,6 +77,7 @@ class TopStoriesAdapter : RecyclerView.Adapter<TopStoriesAdapter.TopStoriesViewH
                 articleUrl=i.articleUrl
                 published_date=i.published_date
                 byline=i.byline
+                abstract=i.abstract
             })
         }
         notifyDataSetChanged()

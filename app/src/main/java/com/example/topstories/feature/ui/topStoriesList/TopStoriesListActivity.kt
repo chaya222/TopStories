@@ -46,7 +46,15 @@ class TopStoriesListActivity :
         })
 
         swipeRefresh.setOnRefreshListener {
-            swipeToRefreshIntent.onNext(TopStoriesListIntent.SwipeToRefresh(currentSection))
+            if (isNetworkConnected()) {
+                swipeToRefreshIntent.onNext(TopStoriesListIntent.SwipeToRefresh(currentSection))
+            }else{
+                swipeRefresh.isRefreshing=false
+                Snackbar.make(clParent, "No internet connection", Snackbar.LENGTH_LONG)
+                    .setAction("CLOSE") { }
+                    .setActionTextColor(resources.getColor(android.R.color.holo_red_light))
+                    .show()
+            }
         }
     }
 
