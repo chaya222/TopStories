@@ -65,7 +65,6 @@ class TopStoriesDetailsActivity :
 
 
     private fun showProperState(state: TopStoriesDetailsViewStates) {
-
         state.article?.let {
             Glide.with(this)
                 .load(it.multimediaUrl)
@@ -82,35 +81,6 @@ class TopStoriesDetailsActivity :
         }
 
     }
-
-//        if (state.isLoading) {
-//            progressBar.makeVisible()
-//        } else {
-//            progressBar.makeInVisible()
-//        }
-//
-//        if (state.articles.isNotEmpty()) {
-//            storiesAdapter.updateList(state.articles)
-//            rvStories.makeVisible()
-//        } else {
-//
-//            rvStories.makeInVisible()
-//        }
-//
-//        if (state.isOffline) {
-//            if (state.articles.isEmpty()) {
-//                state.error?.let {
-//                    Snackbar.make(clParent, "No internet connection", Snackbar.LENGTH_LONG)
-//                        .setAction("CLOSE") { }
-//                        .setActionTextColor(resources.getColor(android.R.color.holo_red_light))
-//                        .show()
-//                }
-//            }
-//
-//        }
-//
-//        swipeRefresh.isRefreshing = state.isRefreshing
-
 
     override fun intents(): Observable<TopStoriesDetailsIntent> {
         return initialIntentPublisher.cast(TopStoriesDetailsIntent::class.java)

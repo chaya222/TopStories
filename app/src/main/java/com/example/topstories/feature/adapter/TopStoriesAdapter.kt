@@ -1,15 +1,20 @@
 package com.example.topstories.feature.adapter
 
+import android.media.Image
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.topstories.R
 import com.example.topstories.db.entity.ArticleEntity
 import com.example.topstories.feature.data.ArticleItem
 import com.example.topstories.feature.listener.TopStoryListener
 import com.example.topstories.utils.makeInVisible
+import kotlinx.android.synthetic.main.activity_top_stories_details.*
 import kotlin.collections.ArrayList
 
 class TopStoriesAdapter : RecyclerView.Adapter<TopStoriesAdapter.TopStoriesViewHolder>() {
@@ -35,10 +40,13 @@ class TopStoriesAdapter : RecyclerView.Adapter<TopStoriesAdapter.TopStoriesViewH
         val itemArticle = topStoriesList.get(position)
 
         holder.tvTitle.text = itemArticle.title
-        holder.tvSection.text =  itemArticle.section
+        holder.tvSection.text =  itemArticle.byline
 
-        if (topStoriesList.size.minus(1) == position)
-            holder.vwDivider.makeInVisible()
+        Glide.with(holder.itemView.context)
+            .load(itemArticle.multimediaUrl)
+            .placeholder(R.drawable.place_holder) //placeholder
+            .error(R.drawable.place_holder) //error
+            .into(holder.imvThumb)
 
     }
 
@@ -54,7 +62,7 @@ class TopStoriesAdapter : RecyclerView.Adapter<TopStoriesAdapter.TopStoriesViewH
 
         val tvTitle = view.findViewById<TextView>(R.id.tvTitle)
         val tvSection = view.findViewById<TextView>(R.id.tvSection)
-        val vwDivider = view.findViewById<View>(R.id.vwDivider)
+        val imvThumb = view.findViewById<ImageView>(R.id.imvThumb)
 
     }
 
@@ -65,6 +73,10 @@ class TopStoriesAdapter : RecyclerView.Adapter<TopStoriesAdapter.TopStoriesViewH
                 title=i.title
                 section=i.section
                 subsection=i.subsection
+                multimediaUrl=i.multimediaUrl
+                articleUrl=i.articleUrl
+                published_date=i.published_date
+                byline=i.byline
             })
         }
         notifyDataSetChanged()

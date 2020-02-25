@@ -1,9 +1,15 @@
 package com.example.topstories.feature.ui.topStoriesList
 
 import android.annotation.SuppressLint
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
+import androidx.core.widget.ImageViewCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.topstories.R
@@ -133,6 +139,7 @@ class TopStoriesListActivity :
     override fun onClick(v: View?) {
         when (v!!.id) {
             clBtmSectionBusiness.id -> {
+                setColorForSelection(clBtmSectionBusiness)
                 currentSection = FilterType.Business
                 if (isNetworkConnected()) {
                     updateStoriesList.onNext(TopStoriesListIntent.UpdateFilteredStories(FilterType.Business))
@@ -146,6 +153,7 @@ class TopStoriesListActivity :
                     )
             }
             clBtmSectionMovie.id -> {
+                setColorForSelection(clBtmSectionMovie)
                 currentSection = FilterType.Movies
                 if (isNetworkConnected()) {
                     updateStoriesList.onNext(TopStoriesListIntent.UpdateFilteredStories(FilterType.Movies))
@@ -159,6 +167,7 @@ class TopStoriesListActivity :
                     )
             }
             clBtmSectionScience.id -> {
+                setColorForSelection(clBtmSectionScience)
                 currentSection = FilterType.Science
                 if (isNetworkConnected()) {
                     updateStoriesList.onNext(TopStoriesListIntent.UpdateFilteredStories(FilterType.Science))
@@ -172,6 +181,7 @@ class TopStoriesListActivity :
                     )
             }
             clBtmSectionWorld.id -> {
+                setColorForSelection(clBtmSectionWorld)
                 currentSection = FilterType.World
                 if (isNetworkConnected()) {
                     updateStoriesList.onNext(TopStoriesListIntent.UpdateFilteredStories(FilterType.World))
@@ -185,6 +195,45 @@ class TopStoriesListActivity :
                     )
             }
         }
+    }
+
+    private fun setColorForSelection(cl : ConstraintLayout){
+        if(cl.id==clBtmSectionScience.id){
+            selectSection(ivScience,tvScience)
+        }else{
+            deSelectSection(ivScience,tvScience)
+        }
+
+        if(cl.id==clBtmSectionBusiness.id){
+            selectSection(ivBusiness,tvBusiness)
+        }else{
+            deSelectSection(ivBusiness,tvBusiness)
+        }
+
+        if(cl.id==clBtmSectionMovie.id){
+            selectSection(ivMovie,tvMovie)
+        }else{
+            deSelectSection(ivMovie,tvMovie)
+        }
+
+        if(cl.id==clBtmSectionWorld.id){
+            selectSection(ivWorld,tvWorld)
+        }else{
+            deSelectSection(ivWorld,tvWorld)
+        }
+
+    }
+
+    private fun selectSection(imv : ImageView,tView : TextView){
+        val colorReq = ContextCompat.getColor(this,R.color.color_feather)
+        ImageViewCompat.setImageTintList(imv, ColorStateList.valueOf(colorReq))
+        tView.setTextColor(colorReq)
+    }
+
+    private fun deSelectSection(imv : ImageView,tView : TextView){
+        val colorReq = ContextCompat.getColor(this,R.color.color_black)
+        ImageViewCompat.setImageTintList(imv, ColorStateList.valueOf(colorReq))
+        tView.setTextColor(colorReq)
     }
 
     override fun onTopStoryClicked(title:String) {
