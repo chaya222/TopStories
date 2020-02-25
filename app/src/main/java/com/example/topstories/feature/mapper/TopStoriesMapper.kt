@@ -24,7 +24,7 @@ fun getTopStoriesEntityFromResponse(item: TopStoriesResult): ArticleEntity {
         title = item.title,
         section = item.section,
         subsection = item.subsection,
-        abstract = item.abstract,
+        abstracts = item.abstract,
         byline = item.byline,
         published_date = item.published_date,
         articleUrl = item.articleUrl,

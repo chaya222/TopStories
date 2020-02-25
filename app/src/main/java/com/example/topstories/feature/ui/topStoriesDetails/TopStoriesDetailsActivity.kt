@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Html
+import android.util.Log
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.topstories.R
@@ -71,13 +72,15 @@ class TopStoriesDetailsActivity :
                 .placeholder(R.drawable.place_holder) //placeholder
                 .error(R.drawable.place_holder) //error
                 .into(imvBackCover)
-            tvAuthor.text=if(it.byline.isNotEmpty()) it.byline else "Unknown"
-            val pubDate = SimpleDateFormat("dd MMM yyyy").format(SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss-05:00").parse(it.published_date))
-            tvPublish.text="Published on: $pubDate "
-            val txt ="${it.articleUrl}"
+            tvAuthor.text = if (it.byline.isNotEmpty()) it.byline else "Unknown"
+            val pubDate = SimpleDateFormat("dd MMM yyyy").format(
+                SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss-05:00").parse(it.published_date)
+            )
+            tvPublish.text = "Published on: $pubDate "
+            val txt = "${it.articleUrl}"
             tvLink.text = txt
             tvTitle.text = it.title
-            tvAbstract.text=it.abstract
+            tvAbstract.text = it.abstracts
 
         }
 

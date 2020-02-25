@@ -91,23 +91,6 @@ class TopStoriesInteractor @Inject constructor(val repo: TopStoriesRepo) :
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
 
-
-
-//                var updateTopStoriesListResult: TopStoriesDetailsResult.UpdateTopStoriesListResult? =
-//                    when {
-//                        action.articles.isNullOrEmpty() -> {
-//                            TopStoriesDetailsResult.UpdateTopStoriesListResult.Failure(
-//                                Throwable()
-//                            )
-//
-//                        }
-//                        else -> TopStoriesDetailsResult.UpdateTopStoriesListResult.Success(action.articles)
-//                    }
-//                Observable.just(updateTopStoriesListResult)
-//                    .cast(TopStoriesDetailsResult.UpdateTopStoriesListResult::class.java)
-//                    .onErrorReturn { TopStoriesDetailsResult.UpdateTopStoriesListResult.Failure(it) }
-//                    .subscribeOn(Schedulers.io())
-//                    .observeOn(AndroidSchedulers.mainThread())
             }
         }
 

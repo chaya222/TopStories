@@ -10,7 +10,7 @@ data class ArticleEntity(
     var title : String = "",
     var section : String = "",
     var subsection : String = "",
-    var abstract : String = "",
+    var abstracts : String = "",
     var byline : String = "",
     var published_date : String = "",
     var articleUrl : String = "",

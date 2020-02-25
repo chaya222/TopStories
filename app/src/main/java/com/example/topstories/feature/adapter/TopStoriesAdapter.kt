@@ -39,6 +39,7 @@ class TopStoriesAdapter : RecyclerView.Adapter<TopStoriesAdapter.TopStoriesViewH
     override fun onBindViewHolder(holder: TopStoriesViewHolder, position: Int) {
         val itemArticle = topStoriesList.get(position)
 
+        Log.d("abstracjhghjht",itemArticle.toString())
         holder.tvTitle.text = itemArticle.title
         holder.tvSection.text =  if(itemArticle.byline.isNotEmpty()) itemArticle.byline else "Unknown"
 
@@ -77,7 +78,7 @@ class TopStoriesAdapter : RecyclerView.Adapter<TopStoriesAdapter.TopStoriesViewH
                 articleUrl=i.articleUrl
                 published_date=i.published_date
                 byline=i.byline
-                abstract=i.abstract
+                abstract=i.abstracts
             })
         }
         notifyDataSetChanged()

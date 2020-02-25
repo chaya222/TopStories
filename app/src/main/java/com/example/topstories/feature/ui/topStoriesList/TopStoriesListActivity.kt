@@ -41,6 +41,9 @@ class TopStoriesListActivity :
     @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
+
         getViewModel().statesLiveData.observe(this, Observer { state ->
             render(state!!)
         })
@@ -70,6 +73,7 @@ class TopStoriesListActivity :
     override fun initViews() {
         setRecyclerView()
         setClickListeners()
+        setColorForSelection(clBtmSectionScience)
     }
 
     override fun render(state: TopStoriesListViewStates) {
