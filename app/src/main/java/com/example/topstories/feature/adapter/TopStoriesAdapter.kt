@@ -1,6 +1,5 @@
 package com.example.topstories.feature.adapter
 
-import android.media.Image
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,8 +12,6 @@ import com.example.topstories.R
 import com.example.topstories.db.entity.ArticleEntity
 import com.example.topstories.feature.data.ArticleItem
 import com.example.topstories.feature.listener.TopStoryListener
-import com.example.topstories.utils.makeInVisible
-import kotlinx.android.synthetic.main.activity_top_stories_details.*
 import kotlin.collections.ArrayList
 
 class TopStoriesAdapter : RecyclerView.Adapter<TopStoriesAdapter.TopStoriesViewHolder>() {

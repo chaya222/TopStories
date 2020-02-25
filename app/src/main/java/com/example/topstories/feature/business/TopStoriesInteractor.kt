@@ -49,24 +49,12 @@ class TopStoriesInteractor @Inject constructor(val repo: TopStoriesRepo) :
                         .onErrorReturn { LoadTopStoriesResult.Failure(it) }
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-//                        .startWith(
-//                            LoadTopStoriesResult.InProgress(
-//                                action.isRefreshing,
-//                                action.filterType
-//                            )
-//                        )
                 } else {
                     repo.getArticlesFrmDB()
                         .map { LoadTopStoriesResult.Offline(it,action.filterType) }
                         .cast(LoadTopStoriesResult::class.java)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-//                        .startWith(
-//                            LoadTopStoriesResult.InProgress(
-//                                action.isRefreshing,
-//                                action.filterType
-//                            )
-//                        )
                 }
 
             }

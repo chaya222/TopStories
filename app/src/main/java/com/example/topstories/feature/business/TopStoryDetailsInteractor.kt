@@ -28,13 +28,7 @@ class TopStoryDetailsInteractor @Inject constructor(val repo: TopStoriesRepo) :
         ObservableTransformer<TopStoriesDetailsAction.LoadStoryDetailAction, TopStoriesDetailsResult> { actions ->
             actions.flatMap { action ->
                 repo.getArticleByTitle(action.name!!)
-                    .map {
-                        try {
-                            TopStoriesDetailsResult.LoadTopStoryDetailsResult.Success(it)
-                        }catch (ex:Exception){
-                            Log.d("exception",ex.message)
-                        }
-                    }
+                    .map { TopStoriesDetailsResult.LoadTopStoryDetailsResult.Success(it) }
                     .cast(TopStoriesDetailsResult::class.java)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())

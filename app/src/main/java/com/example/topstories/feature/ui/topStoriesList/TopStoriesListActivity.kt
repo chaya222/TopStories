@@ -3,7 +3,6 @@ package com.example.topstories.feature.ui.topStoriesList
 import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -36,29 +35,15 @@ class TopStoriesListActivity :
     private val swipeToRefreshIntent = create<TopStoriesListIntent.SwipeToRefresh>()
     private val loadFilteredStories = create<TopStoriesListIntent.LoadFilteredStories>()
     private val updateStoriesList = create<TopStoriesListIntent.UpdateFilteredStories>()
-    private var currentSection: FilterType = FilterType.Science
+    private var currentSection: FilterType = FilterType.World
 
     @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        observeStateLiveData()
+        setSwipeRefresh()
 
-
-        getViewModel().statesLiveData.observe(this, Observer { state ->
-            render(state!!)
-        })
-
-        swipeRefresh.setOnRefreshListener {
-            if (isNetworkConnected()) {
-                swipeToRefreshIntent.onNext(TopStoriesListIntent.SwipeToRefresh(currentSection))
-            }else{
-                swipeRefresh.isRefreshing=false
-                Snackbar.make(clParent, "No internet connection", Snackbar.LENGTH_LONG)
-                    .setAction("CLOSE") { }
-                    .setActionTextColor(resources.getColor(android.R.color.holo_red_light))
-                    .show()
-            }
-        }
     }
 
     override fun provideLayout(): Int = R.layout.activity_top_stories_list
@@ -73,20 +58,21 @@ class TopStoriesListActivity :
     override fun initViews() {
         setRecyclerView()
         setClickListeners()
-        setColorForSelection(clBtmSectionScience)
+
     }
 
     override fun render(state: TopStoriesListViewStates) {
         showProperState(state)
         if (state.initial) {
 
+            setColorForSelection(clBtmSectionWorld)
             if (isNetworkConnected()) {
                 initialIntentPublisher.onNext(TopStoriesListIntent.InitialIntent)
-                updateStoriesList.onNext(TopStoriesListIntent.UpdateFilteredStories(FilterType.Science))
+                updateStoriesList.onNext(TopStoriesListIntent.UpdateFilteredStories(FilterType.World))
             } else
                 loadFilteredStories.onNext(
                     TopStoriesListIntent.LoadFilteredStories(
-                        filterType = FilterType.Science,
+                        filterType = FilterType.World,
                         offline = true
                     )
                 )
@@ -101,9 +87,30 @@ class TopStoriesListActivity :
         clBtmSectionWorld.setOnClickListener(this)
     }
 
+
+    private fun observeStateLiveData(){
+        getViewModel().statesLiveData.observe(this, Observer { state ->
+            render(state!!)
+        })
+    }
+
+    private fun setSwipeRefresh(){
+        swipeRefresh.setOnRefreshListener {
+            if (isNetworkConnected()) {
+                swipeToRefreshIntent.onNext(TopStoriesListIntent.SwipeToRefresh(currentSection))
+            }else{
+                swipeRefresh.isRefreshing=false
+                Snackbar.make(clParent, "No internet connection", Snackbar.LENGTH_LONG)
+                    .setAction("CLOSE") { }
+                    .setActionTextColor(resources.getColor(android.R.color.holo_red_light))
+                    .show()
+            }
+        }
+    }
+
+    // set all view accr to state
     private fun showProperState(state: TopStoriesListViewStates) {
 
-        Log.d("stttaa", state.toString())
         if (state.isLoading) {
             progressBar.makeVisible()
         } else {
@@ -133,6 +140,7 @@ class TopStoriesListActivity :
         swipeRefresh.isRefreshing = state.isRefreshing
     }
 
+    // merge all observable to observe in viewmodel
     override fun intents() = Observable.merge(
         initialIntentPublisher,
         swipeToRefreshIntent,
