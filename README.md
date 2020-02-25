@@ -3,7 +3,6 @@ A project showcasing MVI(Model-View-Intent), Android Arch. Components,RxJava2, D
 
 ## Preview
 <img src="gif_1.gif" width="250" height="480"/> &nbsp;&nbsp;
-<img src="gif_2.gif" width="250" height="480"/> &nbsp;&nbsp;
 
 ## Architecture
 * MVI with Architecture Components
