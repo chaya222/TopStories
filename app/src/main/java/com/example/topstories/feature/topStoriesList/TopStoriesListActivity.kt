@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.topstories.R
 import com.example.topstories.base.BaseActivity
 import com.example.topstories.feature.adapter.TopStoriesAdapter
+import com.example.topstories.feature.listener.TopStoryListener
+import com.example.topstories.feature.topStoriesDetails.TopStoriesDetailsActivity
 import com.example.topstories.utils.isNetworkConnected
 import com.example.topstories.utils.makeInVisible
 import com.example.topstories.utils.makeVisible
@@ -23,7 +25,7 @@ import com.google.android.material.snackbar.Snackbar
 
 class TopStoriesListActivity :
     BaseActivity<TopStoriesListViewModel, TopStoriesListIntent, TopStoriesListViewStates>(),
-    View.OnClickListener {
+    View.OnClickListener,TopStoryListener {
 
     private var storiesAdapter: TopStoriesAdapter = TopStoriesAdapter()
     private val initialIntentPublisher = create<TopStoriesListIntent.InitialIntent>()
@@ -127,6 +129,7 @@ class TopStoriesListActivity :
         val linearLayoutManager = LinearLayoutManager(this)
         rvStories.layoutManager = linearLayoutManager
         rvStories.adapter = storiesAdapter
+        storiesAdapter.setTopStoryClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -184,5 +187,9 @@ class TopStoriesListActivity :
                     )
             }
         }
+    }
+
+    override fun onTopStoryClicked(title:String) {
+        startActivity(TopStoriesDetailsActivity.newInstance(this,title))
     }
 }

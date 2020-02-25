@@ -8,12 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.topstories.R
 import com.example.topstories.db.entity.ArticleEntity
 import com.example.topstories.feature.data.ArticleItem
+import com.example.topstories.feature.listener.TopStoryListener
 import com.example.topstories.utils.makeInVisible
 import kotlin.collections.ArrayList
 
 class TopStoriesAdapter : RecyclerView.Adapter<TopStoriesAdapter.TopStoriesViewHolder>() {
 
     private var topStoriesList = ArrayList<ArticleItem>()
+    private var topStoryListener : TopStoryListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TopStoriesViewHolder {
         return TopStoriesViewHolder(
@@ -40,7 +42,16 @@ class TopStoriesAdapter : RecyclerView.Adapter<TopStoriesAdapter.TopStoriesViewH
 
     }
 
-    inner class TopStoriesViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class TopStoriesViewHolder(view: View) : RecyclerView.ViewHolder(view),View.OnClickListener {
+
+        init {
+            view.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            topStoryListener?.onTopStoryClicked(topStoriesList[adapterPosition].title)
+        }
+
         val tvTitle = view.findViewById<TextView>(R.id.tvTitle)
         val tvSection = view.findViewById<TextView>(R.id.tvSection)
         val vwDivider = view.findViewById<View>(R.id.vwDivider)
@@ -57,6 +68,10 @@ class TopStoriesAdapter : RecyclerView.Adapter<TopStoriesAdapter.TopStoriesViewH
             })
         }
         notifyDataSetChanged()
+    }
+
+    fun setTopStoryClickListener(topStoryClickListener: TopStoryListener){
+        topStoryListener=topStoryClickListener
     }
 
 }

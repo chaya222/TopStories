@@ -9,6 +9,7 @@ import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import java.lang.Exception
 import javax.inject.Inject
 
 
@@ -28,8 +29,14 @@ class TopStoryDetailsInteractor @Inject constructor(val repo: TopStoriesRepo) :
         ObservableTransformer<TopStoriesDetailsAction.LoadStoryDetailAction, TopStoriesDetailsResult> { actions ->
             actions.flatMap { action ->
                 repo.getArticleByTitle(action.name!!)
-                    .map { TopStoriesDetailsResult.LoadTopStoryDetailsResult.Success(it)}
-                    .cast(TopStoriesDetailsResult.LoadTopStoryDetailsResult::class.java)
+                    .map {
+                        try {
+                            TopStoriesDetailsResult.LoadTopStoryDetailsResult.Success(it)
+                        }catch (ex:Exception){
+                            Log.d("exception",ex.message)
+                        }
+                    }
+                    .cast(TopStoriesDetailsResult::class.java)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
 

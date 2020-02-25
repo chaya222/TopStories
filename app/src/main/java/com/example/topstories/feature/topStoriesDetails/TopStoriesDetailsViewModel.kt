@@ -7,9 +7,10 @@ import com.example.topstories.feature.business.TopStoryDetailsInteractor
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
+import javax.inject.Inject
 
 
-class TopStoriesDetailsViewModel(topStoriesInteractor: TopStoryDetailsInteractor) :
+class TopStoriesDetailsViewModel @Inject constructor(topStoriesInteractor: TopStoryDetailsInteractor) :
     BaseViewModel<TopStoriesDetailsIntent, TopStoriesDetailsAction, TopStoriesDetailsResult, TopStoriesDetailsViewStates>() {
 
     override val reducer =
@@ -63,7 +64,7 @@ class TopStoriesDetailsViewModel(topStoriesInteractor: TopStoryDetailsInteractor
 
     override fun actionFromIntent(intent: TopStoriesDetailsIntent): TopStoriesDetailsAction =
         when (intent) {
-            is TopStoriesDetailsIntent.LoadStoryDetailsIntent -> TopStoriesDetailsAction.LoadStoryDetailAction(
+            is TopStoriesDetailsIntent.IntialIntent -> TopStoriesDetailsAction.LoadStoryDetailAction(
                 intent.name
             )
         }

@@ -21,9 +21,7 @@ class TopStoriesDetailsActivity :
         }
     }
 
-
     private val initialIntentPublisher = create<TopStoriesDetailsIntent.IntialIntent>()
-    private val loadStoryDetailsIntent = create<TopStoriesDetailsIntent.LoadStoryDetailsIntent>()
 
     @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,12 +53,6 @@ class TopStoriesDetailsActivity :
 
     override fun render(state: TopStoriesDetailsViewStates) {
         showProperState(state)
-        if (state.initial) {
-
-//            initialIntentPublisher.onNext(TopStoriesDetailsIntent.LoadStoryDetailsIntent)
-
-
-        }
     }
 
 
@@ -95,10 +87,10 @@ class TopStoriesDetailsActivity :
 //        swipeRefresh.isRefreshing = state.isRefreshing
     }
 
-    override fun intents() = Observable.merge(
-        initialIntentPublisher,
-        loadStoryDetailsIntent
-    )
+    override fun intents() : Observable<TopStoriesDetailsIntent>{
+        return initialIntentPublisher.cast(TopStoriesDetailsIntent::class.java)
+    }
+
 
 }
 
