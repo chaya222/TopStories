@@ -2,7 +2,7 @@
 A project showcasing MVI(Model-View-Intent), Android Arch. Components,RxJava2, Dagger2, Retrofit, OkHttp3.
 
 ## Preview
-<img src="gif_1.gif" width="250" height="480"/> &nbsp;&nbsp;
+<img src="app.gif" width="250" height="480"/> &nbsp;&nbsp;
 
 ## Architecture
 * MVI with Architecture Components
